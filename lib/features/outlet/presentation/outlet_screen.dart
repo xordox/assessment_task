@@ -1,4 +1,3 @@
-
 import 'package:assessment_chart/core/common_widgets/error_screen.dart';
 import 'package:assessment_chart/core/common_widgets/loading_indicator.dart';
 import 'package:assessment_chart/di/injector.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-
 class OutletScreen extends StatefulWidget {
   const OutletScreen({super.key});
 
@@ -17,16 +15,15 @@ class OutletScreen extends StatefulWidget {
 }
 
 class _OutletScreenState extends State<OutletScreen> {
+  final outletBloc = sl<OutletBloc>();
 
-    final outletBloc = sl<OutletBloc>();
-
-    @override
+  @override
   void initState() {
     super.initState();
     outletBloc.add(FetchOutlet());
   }
 
- @override
+  @override
   void dispose() {
     outletBloc.close(); // Dispose of the bloc to prevent memory leaks
     super.dispose();
@@ -34,7 +31,6 @@ class _OutletScreenState extends State<OutletScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: BlocBuilder<OutletBloc, OutletState>(
         bloc: outletBloc,

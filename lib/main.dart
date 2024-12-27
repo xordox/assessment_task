@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:assessment_chart/di/injector.dart';
 import 'package:assessment_chart/features/outlet/presentation/bloc/outlet_bloc.dart';
 import 'package:assessment_chart/features/outlet/presentation/outlet_screen.dart';
@@ -13,8 +11,7 @@ void main() async {
   await setup();
   runApp(MultiBlocProvider(providers: [
     BlocProvider<PapTransactionBloc>(
-      create: (context) =>
-          sl<PapTransactionBloc>(),
+      create: (context) => sl<PapTransactionBloc>(),
     ),
     BlocProvider<OutletBloc>(
       create: (context) => sl<OutletBloc>(),
@@ -35,6 +32,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -67,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PAP & Outlet Report', style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),),
+        title: const Text(
+          'PAP & Outlet Report',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+        ),
         backgroundColor: Colors.purple,
       ),
       body: _screens[_selectedIndex],

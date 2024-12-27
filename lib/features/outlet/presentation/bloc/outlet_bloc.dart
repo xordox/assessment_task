@@ -11,44 +11,34 @@ part 'outlet_event.dart';
 part 'outlet_state.dart';
 
 class OutletBloc extends Bloc<OutletEvent, OutletState> {
- final OutletUsecase outletUsecase;
- final NetworkService network = sl<NetworkService>();
+  final OutletUsecase outletUsecase;
+  final NetworkService network = sl<NetworkService>();
 
- OutletBloc({
-  required this.outletUsecase
- }): super(OutletInitial()){
-  on<FetchOutlet>(_fetchOutletData);
- }
+  OutletBloc({required this.outletUsecase}) : super(OutletInitial()) {
+    on<FetchOutlet>(_fetchOutletData);
+  }
 
- _fetchOutletData(OutletEvent event, Emitter<OutletState> emit) async {
-    try{
-      if(network.isConnected){
+  _fetchOutletData(OutletEvent event, Emitter<OutletState> emit) async {
+    try {
+      if (network.isConnected) {
         emit(OutletInitial());
-        Either<OutletResponseModel, APIError> outletRes = await outletUsecase.call(event);
+        Either<OutletResponseModel, APIError> outletRes =
+            await outletUsecase.call(event);
 
-        outletRes.fold((response){
-          if(response.message == "SUCCESS"){
-            emit(OutletSuccess(outletResponseModel: response
-             
-            ));
-          } else{
+        outletRes.fold((response) {
+          if (response.message == "SUCCESS") {
+            emit(OutletSuccess(outletResponseModel: response));
+          } else {
             emit(OutletError(error: "something went wrong"));
-          } 
-
-        }, 
-        (error){
-            emit(OutletError(error: error.message.toString()));
+          }
+        }, (error) {
+          emit(OutletError(error: error.message.toString()));
         });
-
-      } else{
+      } else {
         emit(OutletError(error: "No internet connection"));
       }
     } catch (e) {
       emit(OutletError(error: e.toString()));
-
     }
-
   }
-
-
 }

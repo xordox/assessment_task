@@ -1,4 +1,3 @@
-
 import 'package:assessment_chart/core/network/dio_client.dart';
 import 'package:assessment_chart/core/network/network_state.dart';
 import 'package:assessment_chart/features/outlet/data/repository_impl/outlet_repository_impl.dart';
@@ -15,15 +14,12 @@ import '../features/pap/presentation/bloc/pap_bloc.dart';
 GetIt sl = GetIt.instance;
 
 Future setup() async {
-
-
-    sl.registerSingleton<NetworkService>(NetworkService());
+  sl.registerSingleton<NetworkService>(NetworkService());
   sl<NetworkService>().listenNetwork();
 
-   sl.registerLazySingleton(() => DioClient.getInstance());
+  sl.registerLazySingleton(() => DioClient.getInstance());
 
-
-  // Registering the repositories 
+  // Registering the repositories
   sl.registerLazySingleton<OutletRepository>(() => OutletRepositoryImpl(sl()));
   sl.registerLazySingleton<PapRepository>(() => PapRepositoryImpl(sl()));
 

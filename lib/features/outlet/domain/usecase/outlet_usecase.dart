@@ -4,13 +4,12 @@ import 'package:assessment_chart/features/outlet/data/model/outlet_response_mode
 import 'package:assessment_chart/features/outlet/domain/repository/outlet_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class OutletUsecase  with BaseApiUseCase{
+class OutletUsecase with BaseApiUseCase {
   final OutletRepository outletRepository;
 
   OutletUsecase({
     required this.outletRepository,
   });
-
 
   @override
   Future<Either<OutletResponseModel, APIError>> call(params) {

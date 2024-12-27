@@ -22,8 +22,8 @@ class PapTransactionBloc
   }
 
   _fetchPapTransactionReport(
-    PapTransactionEvent event, Emitter<PapTransactionState> emit) async {
-  try {
+      PapTransactionEvent event, Emitter<PapTransactionState> emit) async {
+    try {
       emit(PapTransactionInitial());
       Either<PapResponseModel, APIError> papRes = await papUsecase.call(event);
 
@@ -39,10 +39,8 @@ class PapTransactionBloc
           emit(PapTransactionError(error: error.message.toString()));
         },
       );
-  } catch (e) {
-    emit(PapTransactionError(error: e.toString()));
+    } catch (e) {
+      emit(PapTransactionError(error: e.toString()));
+    }
   }
 }
-
-}
-
