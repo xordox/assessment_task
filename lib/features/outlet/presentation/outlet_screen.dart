@@ -22,39 +22,54 @@ class _OutletScreenState extends State<OutletScreen> {
 
     @override
   void initState() {
-    outletBloc.add(FetchOutlet());
     super.initState();
+    outletBloc.add(FetchOutlet());
   }
+
+ @override
+  void dispose() {
+    outletBloc.close(); // Dispose of the bloc to prevent memory leaks
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    return BlocBuilder<OutletBloc, OutletState>(
-      builder: (context, state) {
-        if (state is OutletLoading) {
-          return const LoadingIndicator();
-        } else if (state is OutletSuccess) {
-          return _buildSuccess(state);
-        } else if (state is OutletError) {
-          return _buildError(state, outletBloc);
-        }
-        return const SizedBox();
-      },
+    return Scaffold(
+      body: BlocBuilder<OutletBloc, OutletState>(
+        bloc: outletBloc,
+        builder: (context, state) {
+          if (state is OutletLoading) {
+            return const LoadingIndicator();
+          } else if (state is OutletSuccess) {
+            return _buildSuccess(state);
+          } else if (state is OutletError) {
+            return _buildError(state, outletBloc);
+          }
+          return const SizedBox();
+        },
+      ),
     );
   }
 
   Widget _buildSuccess(OutletSuccess state) {
     final data = state.outletResponseModel.data.items;
-    return SfCircularChart(
-      tooltipBehavior: TooltipBehavior(enable: true),
-      legend: Legend(isVisible: true),
-      series: <CircularSeries>[
-        DoughnutSeries<OutletItem, String>(
-          dataSource: data,
-          xValueMapper: (item, _) => item.type,
-          yValueMapper: (item, _) => item.value,
-          dataLabelSettings: const DataLabelSettings(isVisible: true),
-        ),
-      ],
+    return Card(
+      child: SfCircularChart(
+        //title: ChartTitle(text: "Outlet Stats"),
+        tooltipBehavior: TooltipBehavior(enable: true),
+        legend: Legend(isVisible: true),
+        series: <CircularSeries>[
+          DoughnutSeries<OutletItem, String>(
+            innerRadius: "0",
+            dataSource: data,
+            explode: true,
+            xValueMapper: (item, _) => item.type,
+            yValueMapper: (item, _) => item.value,
+            dataLabelSettings: const DataLabelSettings(isVisible: true),
+          ),
+        ],
+      ),
     );
   }
 

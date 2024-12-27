@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'PAP & Outlet Report',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const HomeScreen(),
@@ -66,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PAP & Outlet Report'),
+        title: const Text('PAP & Outlet Report', style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),),
+        backgroundColor: Colors.purple,
       ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
