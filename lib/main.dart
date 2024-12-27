@@ -8,22 +8,19 @@ import 'package:assessment_chart/features/pap/presentation/pap_transaction_scree
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
-  runApp(MultiBlocProvider(
-    providers: [
-        BlocProvider<PapTransactionBloc>(
-          create: (context) => sl<PapTransactionBloc>()..add(FetchPapTransactionReport()),
-        ),
-        BlocProvider<OutletBloc>(
-          create: (context) => sl<OutletBloc>()..add(FetchOutlet()),
-        ),
-    ],
-    child: const MyApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider<PapTransactionBloc>(
+      create: (context) =>
+          sl<PapTransactionBloc>(),
+    ),
+    BlocProvider<OutletBloc>(
+      create: (context) => sl<OutletBloc>(),
+    ),
+  ], child: const MyApp()));
 }
-
-
 
 // Main App
 class MyApp extends StatelessWidget {
@@ -50,9 +47,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [
-    PapTransactionScreen(),
-    OutletScreen(),
+  // final List<Widget> _screens = const [
+  //   PapTransactionScreen(),
+  //   OutletScreen(),
+  // ];
+
+  final List<Widget> _screens = [
+    BlocProvider<PapTransactionBloc>(
+      create: (context) =>
+          sl<PapTransactionBloc>()..add(FetchPapTransactionReport()),
+      child: const PapTransactionScreen(),
+    ),
+    BlocProvider<OutletBloc>(
+      create: (context) => sl<OutletBloc>()..add(FetchOutlet()),
+      child: const OutletScreen(),
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -85,66 +94,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-
-// // PAP Transaction Bloc
-// class PapTransactionBloc extends Cubit<PapTransactionState> {
-//   final ApiService apiService;
-
-//   PapTransactionBloc(this.apiService) : super(PapTransactionInitial());
-
-//   void fetchTransactionReport() async {
-//     emit(PapTransactionLoading());
-//     try {
-//       final data = await apiService.fetchPapTransactionReport();
-//       log("data: ${data.toString()}");
-//       emit(PapTransactionSuccess(data));
-//     } catch (error) {
-//       emit(PapTransactionError(error.toString()));
-//     }
-//   }
-// }
-
-// // PAP Transaction States
-// abstract class PapTransactionState {}
-// class PapTransactionInitial extends PapTransactionState {}
-// class PapTransactionLoading extends PapTransactionState {}
-// class PapTransactionSuccess extends PapTransactionState {
-//   final Map<String, dynamic> data;
-//   PapTransactionSuccess(this.data);
-// }
-// class PapTransactionError extends PapTransactionState {
-//   final String message;
-//   PapTransactionError(this.message);
-// }
-
-// // Outlet Bloc
-// class OutletBloc extends Cubit<OutletState> {
-//   final ApiService apiService;
-
-//   OutletBloc(this.apiService) : super(OutletInitial());
-
-//   void fetchOutlet() async {
-//     emit(OutletLoading());
-//     try {
-//       final data = await apiService.fetchOutlet();
-//       emit(OutletSuccess(data));
-//     } catch (error) {
-//       emit(OutletError(error.toString()));
-//     }
-//   }
-// }
-
-// // Outlet States
-// abstract class OutletState {}
-// class OutletInitial extends OutletState {}
-// class OutletLoading extends OutletState {}
-// class OutletSuccess extends OutletState {
-//   final Map<String, dynamic> data;
-//   OutletSuccess(this.data);
-// }
-// class OutletError extends OutletState {
-//   final String message;
-//   OutletError(this.message);
-// }

@@ -15,7 +15,6 @@ class NetworkService {
           networkState = false;
         } else {
           networkState = true;
-          // sl<LocalService>().syncData();
         }
       },
     );

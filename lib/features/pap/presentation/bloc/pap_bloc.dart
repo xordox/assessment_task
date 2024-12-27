@@ -24,9 +24,9 @@ class PapTransactionBloc
   _fetchPapTransactionReport(
     PapTransactionEvent event, Emitter<PapTransactionState> emit) async {
   try {
-    // Log network status for debugging
     log("Checking network connection...");
-    if (network.isConnected) {
+    //if (network.isConnected) {
+      emit(PapTransactionInitial());
       log("Network is connected");
       Either<PapResponseModel, APIError> papRes = await papUsecase.call(event);
 
@@ -45,10 +45,10 @@ class PapTransactionBloc
           emit(PapTransactionError(error: error.message.toString()));
         },
       );
-    } else {
-      log("Network is not connected");
-      emit(PapTransactionError(error: "No internet connection"));
-    }
+    // } else {
+    //   log("Network is not connected");
+    //   emit(PapTransactionError(error: "No internet connection"));
+    // }
   } catch (e) {
     log("Exception caught: $e");
     emit(PapTransactionError(error: e.toString()));

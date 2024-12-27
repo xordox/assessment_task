@@ -1,4 +1,3 @@
-// PAP Transaction Screen
 import 'package:assessment_chart/core/common_widgets/error_screen.dart';
 import 'package:assessment_chart/core/common_widgets/loading_indicator.dart';
 import 'package:assessment_chart/di/injector.dart';
@@ -8,12 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class PapTransactionScreen extends StatelessWidget {
+class PapTransactionScreen extends StatefulWidget {
   const PapTransactionScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<PapTransactionScreen> createState() => _PapTransactionScreenState();
+}
+
+class _PapTransactionScreenState extends State<PapTransactionScreen> {
     final papTransactionBloc = sl<PapTransactionBloc>();
+
+@override
+  void initState() {
+    papTransactionBloc.add(FetchPapTransactionReport());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return BlocBuilder<PapTransactionBloc, PapTransactionState>(
         builder: (context, state) {
