@@ -22,7 +22,6 @@ void main() async {
   ], child: const MyApp()));
 }
 
-// Main App
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -35,8 +34,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// Home Screen
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -46,11 +43,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-
-  // final List<Widget> _screens = const [
-  //   PapTransactionScreen(),
-  //   OutletScreen(),
-  // ];
 
   final List<Widget> _screens = [
     BlocProvider<PapTransactionBloc>(
