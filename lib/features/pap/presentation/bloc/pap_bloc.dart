@@ -24,7 +24,7 @@ class PapTransactionBloc
   _fetchPapTransactionReport(
       PapTransactionEvent event, Emitter<PapTransactionState> emit) async {
     try {
-      emit(PapTransactionInitial());
+      emit(PapTransactionLoading());
       Either<PapResponseModel, APIError> papRes = await papUsecase.call(event);
 
       papRes.fold(

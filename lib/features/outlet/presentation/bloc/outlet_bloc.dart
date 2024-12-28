@@ -21,7 +21,7 @@ class OutletBloc extends Bloc<OutletEvent, OutletState> {
   _fetchOutletData(OutletEvent event, Emitter<OutletState> emit) async {
     try {
       if (network.isConnected) {
-        emit(OutletInitial());
+        emit(OutletLoading());
         Either<OutletResponseModel, APIError> outletRes =
             await outletUsecase.call(event);
 

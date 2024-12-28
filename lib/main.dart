@@ -3,6 +3,7 @@ import 'package:assessment_chart/features/outlet/presentation/bloc/outlet_bloc.d
 import 'package:assessment_chart/features/outlet/presentation/outlet_screen.dart';
 import 'package:assessment_chart/features/pap/presentation/bloc/pap_bloc.dart';
 import 'package:assessment_chart/features/pap/presentation/pap_transaction_screen.dart';
+import 'package:assessment_chart/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PAP & Outlet Report',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const HomeScreen(),
+      theme: ThemeData(primarySwatch: Colors.purple),
+      home: const SplashScreen(),
     );
   }
 }
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'PAP & Outlet Report',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
         ),
-        backgroundColor: Colors.purple,
+        backgroundColor: Color.fromARGB(255, 60, 15, 68),
       ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
